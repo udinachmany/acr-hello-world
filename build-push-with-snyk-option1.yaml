@@ -1,0 +1,21 @@
+version: 1.0-preview-1
+steps:
+  - build: -t {{.Run.Registry}}/helloworld:{{.Run.ID}} -f Dockerfile .
+  
+  - id: snyk-test-app
+    cmd: >
+      {{.Run.Registry}}/helloworld:{{.Run.ID}}
+      sh -c "curl -sSL https://storage.googleapis.com/snyk-demo/snyk.sh | sh -s
+      test --severity-threshold=medium || true"
+    entryPoint: 
+    env: ["PROJECT_PATH=/src", "SNYK_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+
+  - id: snyk-test-os
+    cmd: >
+      {{.Run.Registry}}/helloworld:{{.Run.ID}}
+      sh -c "curl -sSL https://storage.googleapis.com/snyk-demo/snyk.sh | sh -s 
+      test --docker - --file=/workspace/Dockerfile --severity-threshold=high"
+    entryPoint: 
+    env: ["PROJECT_PATH=/src", "SNYK_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"]
+
+  - push: ["{{.Run.Registry}}/helloworld:{{.Run.ID}}"]

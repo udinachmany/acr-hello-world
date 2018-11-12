@@ -1,3 +1,9 @@
+# Snyk Integration with ACR
+To run the integration example:
+1. Check out this repo: `git clone https://github.com/snyk-partners/acr-build-helloworld-node.git && cd acr-build-helloworld-node`
+2. In `build-push-with-snyk-option1.yaml`: Replace `SNYK_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx` with a valid snyk token.
+3. Run: `az acr run -f build-push-with-snyk-option1.yaml .`
+
 # ACR Build Hello World
 
 This Node.js application is for use in demonstrating Azure Container Registry Build (ACR Build), a suite of features within [Azure Container Registry](https://azure.microsoft.com/services/container-registry/) for performing Docker container builds on [Azure](https://azure.com).

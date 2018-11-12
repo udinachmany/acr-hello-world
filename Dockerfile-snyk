@@ -1,0 +1,6 @@
+ARG TARGET
+FROM $TARGET
+ARG SNYK_TOKEN
+ADD https://storage.googleapis.com/snyk-demo/snyk-linux /tmp/snyk-linux
+RUN chmod +x /tmp/snyk-linux
+RUN /tmp/snyk-linux test --docker -

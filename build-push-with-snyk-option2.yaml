@@ -1,0 +1,20 @@
+version: 1.0-preview-1
+steps:
+  - id: snyk-test-app
+    cmd: snyk/snyk-cli:npm test
+    entryPoint: /home/node/docker-entrypoint.sh
+    env:
+      - PROJECT_PATH=/src
+      - SNYK_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+
+  - build: -t {{.Run.Registry}}/helloworld:{{.Run.ID}} -f Dockerfile .
+
+  - id: snyk-test-os
+    build: >
+      -f Dockerfile-snyk
+      --build-arg SNYK_TOKEN=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      --build-arg TARGET={{.Run.Registry}}/helloworld:{{.Run.ID}}
+      .
+    
+  - push: ["{{.Run.Registry}}/snyk:{{.Run.ID}}"]
+
