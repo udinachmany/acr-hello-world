@@ -10,7 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "ejs": "2.5.4",
-    "lodash": "4.17.0",
+    "lodash": "4.17.19",
     "ms": "0.7.0",
     "qs": "^6.6.0"
   }
